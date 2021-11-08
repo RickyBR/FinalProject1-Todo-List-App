@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="315dp"
+    android:layout_height="315dp"
+    android:background="@drawable/layout_task"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="Task Baru "
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/mregular"
+        android:textColor="@color/black"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3BAA1"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="4dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Masukkan Judul"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/mregular"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="Task Anda"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserratlight"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Atur Tanggal"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/mregular"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/calendar_icon"
+            android:layout_marginTop="4dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:hint="Tanggal Anda"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:fontFamily="@font/montserratlight"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Atur Waktu"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/mregular"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/clock_icon"
+            android:layout_marginTop="4dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:hint="Waktu Anda"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:fontFamily="@font/montserratlight"/>
+
+    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="80dp"
+        android:layout_height="26dp"
+        android:background="@drawable/btn_finish"
+        android:fontFamily="@font/mregular"
+        android:text="Save"
+        android:layout_marginTop="12dp"
+        android:textColor="#CCFFFFFF"
+        android:layout_gravity="center"/>
+
+
+</LinearLayout>
