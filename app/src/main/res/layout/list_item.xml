@@ -10,15 +10,16 @@
         android:layout_height="40dp"
 
         >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tugas 1"
-        android:fontFamily="@font/mregular"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:layout_marginStart="16dp"
-        />
+
+        <TextView
+            android:id="@+id/teksview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/mregular"
+            android:text="Tugas 1"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="80dp"

@@ -21,35 +21,38 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginTop="4dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Masukkan Judul"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/mregular"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:hint="Task Anda"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/montserratlight"/>
 
     <TextView
+        android:id="@+id/viewJudul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Atur Tanggal"
-        android:textSize="14sp"
-        android:textColor="@color/black"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/mregular"
+        android:text="Masukkan Judul"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/textJudul"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserratlight"
+        android:hint="Task Anda"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/viewTanggal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        />
+        android:fontFamily="@font/mregular"
+        android:text="Atur Tanggal"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,26 +67,29 @@
             android:layout_height="24dp"
             android:src="@drawable/calendar_icon"
             android:layout_marginTop="4dp"/>
+
         <EditText
+            android:id="@+id/textTanggal"
             android:layout_width="match_parent"
             android:layout_height="35dp"
+            android:fontFamily="@font/montserratlight"
             android:hint="Tanggal Anda"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:fontFamily="@font/montserratlight"/>
+            android:textSize="14sp" />
 
 
     </LinearLayout>
+
     <TextView
+        android:id="@+id/viewWaktu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Atur Waktu"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/mregular"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        />
+        android:fontFamily="@font/mregular"
+        android:text="Atur Waktu"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -98,24 +104,28 @@
             android:layout_height="24dp"
             android:src="@drawable/clock_icon"
             android:layout_marginTop="4dp"/>
+
         <EditText
+            android:id="@+id/textWaktu"
             android:layout_width="match_parent"
             android:layout_height="35dp"
+            android:fontFamily="@font/montserratlight"
             android:hint="Waktu Anda"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:fontFamily="@font/montserratlight"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
+
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/saveButton"
         android:layout_width="80dp"
         android:layout_height="26dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
         android:background="@drawable/btn_finish"
         android:fontFamily="@font/mregular"
         android:text="Save"
-        android:layout_marginTop="12dp"
-        android:textColor="#CCFFFFFF"
-        android:layout_gravity="center"/>
+        android:textColor="#CCFFFFFF" />
 
 
 </LinearLayout>
