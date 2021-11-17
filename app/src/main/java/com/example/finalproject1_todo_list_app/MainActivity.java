@@ -5,27 +5,30 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.TimePicker;
 
+import com.example.finalproject1_todo_list_app.Utils.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    FloatingActionButton btnAdd;
-
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
-
-    List<ListItem> listItems;
-
+    private RecyclerView mRecyclerview;
+    private FloatingActionButton btnAdd;
+    private DatabaseHelper myDB;
+    private List<ListItem> mList;
+    private viewadapter adapter;
     String judul,waktu,tanggal;
 
     @Override
@@ -33,25 +36,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView)findViewById(R.id.taskRV);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        listItems = new ArrayList<>();
-
-        adapter = new viewadapter(listItems,this);
-        recyclerView.setAdapter(adapter);
-
+        mRecyclerview = findViewById(R.id.taskRV);
         btnAdd = findViewById(R.id.flButton);
+        myDB = new DatabaseHelper(MainActivity.this);
+        mList = new ArrayList<>();
+        adapter = new viewadapter(myDB , MainActivity.this);
+
+        mRecyclerview.setHasFixedSize(true);
+        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerview.setAdapter(adapter);
+
+        mList = myDB.getAllTasks();
+        Collections.reverse(mList);
+        adapter.setTasks(mList);
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog();
             }
         });
-
-
-
 
     }
 
@@ -60,8 +64,57 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.new_task);
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_window);
         dialog.show();
+        Calendar calendar  = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+        boolean isUpdate = false;
+
+        final int t1hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+        final int t1minute = calendar.get(Calendar.MINUTE);
+
+        EditText etDate = dialog.findViewById(R.id.textTanggal);
+        etDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        month = month+1;
+                        String date = day+"/"+month+"/"+year;
+                        etDate.setText(date);
+                    }
+                },year,month,day);
+                datePickerDialog.show();
+            }
+        });
+        EditText etTime = dialog.findViewById(R.id.textWaktu);
+        etTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        MainActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                //Initialize Calendar
+                                calendar.set(0,0,0,hourOfDay,minute);
+                                //Set selected time on text view
+                                etTime.setText(DateFormat.format("hh:mm aa",calendar));
+                            }
+                        },12,0,false
+                );
+                //Displayed previus selected time
+                timePickerDialog.updateTime(t1hour,t1minute);
+                //Show dialog
+                timePickerDialog.show();
+            }
+        });
         AppCompatButton btnSave = (AppCompatButton) dialog.findViewById(R.id.saveButton);
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,20 +122,15 @@ public class MainActivity extends AppCompatActivity {
                 tanggal = ((EditText)dialog.findViewById(R.id.textTanggal)).getText().toString();
                 waktu = ((EditText)dialog.findViewById(R.id.textWaktu)).getText().toString();
 
-                ListItem listItem = new ListItem(
-                        judul,
-                        tanggal,
-                        waktu
-                );
-                listItems.add(listItem);
+                ListItem item = new ListItem();
+                item.setHead(judul);
+                item.setTanggal(tanggal);
+                item.setWaktu(waktu);
+                myDB.insertTask(item);
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
         });
     }
-
-
-
-
 
 }
