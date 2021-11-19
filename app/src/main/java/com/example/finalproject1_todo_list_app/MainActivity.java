@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.finalproject1_todo_list_app.Utils.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,12 +26,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView mRecyclerview;
-    private FloatingActionButton btnAdd;
-    private DatabaseHelper myDB;
-    private List<ListItem> mList;
-    private viewadapter adapter;
+    RecyclerView mRecyclerview;
+    FloatingActionButton btnAdd;
+    DatabaseHelper myDB;
+    viewadapter adapter;
     String judul,waktu,tanggal;
+    ArrayList<String> task_id,task_title,task_date,task_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,25 +40,40 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerview = findViewById(R.id.taskRV);
         btnAdd = findViewById(R.id.flButton);
-        myDB = new DatabaseHelper(MainActivity.this);
-        mList = new ArrayList<>();
-        adapter = new viewadapter(myDB , MainActivity.this);
-
-        mRecyclerview.setHasFixedSize(true);
-        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerview.setAdapter(adapter);
-
-        mList = myDB.getAllTasks();
-        Collections.reverse(mList);
-        adapter.setTasks(mList);
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog();
             }
         });
+        myDB = new DatabaseHelper(MainActivity.this);
+        task_id = new ArrayList<>();
+        task_title = new ArrayList<>();
+        task_date = new ArrayList<>();
+        task_time = new ArrayList<>();
 
+        displayData();
+
+        adapter = new viewadapter(this,task_id,task_title,task_date,task_time);
+        mRecyclerview.setAdapter(adapter);
+        mRecyclerview.setHasFixedSize(true);
+        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+    void displayData(){
+        Cursor cursor = myDB.getAllTasks();
+        if(cursor.getCount() == 0){
+            Toast.makeText(this,"No data.", Toast.LENGTH_SHORT).show();
+        }else{
+            while (cursor.moveToNext()){
+                task_id.add(cursor.getString(0));
+                task_title.add(cursor.getString(1));
+                task_date.add(cursor.getString(2));
+                task_time.add(cursor.getString(3));
+
+            }
+        }
     }
 
     private void showDialog(){
@@ -68,8 +85,6 @@ public class MainActivity extends AppCompatActivity {
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        boolean isUpdate = false;
 
         final int t1hour = calendar.get(Calendar.HOUR_OF_DAY);
 
@@ -122,11 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 tanggal = ((EditText)dialog.findViewById(R.id.textTanggal)).getText().toString();
                 waktu = ((EditText)dialog.findViewById(R.id.textWaktu)).getText().toString();
 
-                ListItem item = new ListItem();
-                item.setHead(judul);
-                item.setTanggal(tanggal);
-                item.setWaktu(waktu);
-                myDB.insertTask(item);
+                myDB.insertTask(judul,tanggal,waktu);
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
             }

@@ -4,85 +4,83 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.Nullable;
-
-import com.example.finalproject1_todo_list_app.ListItem;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.Toast;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    private Context context;
     private SQLiteDatabase db;
-    private static  final String DATABASE_NAME = "TODO_DATABASE";
-    private static  final String TABLE_NAME = "TODO_TABLE";
-    private static  final String COL_1 = "ID";
-    private static  final String COL_2 = "TASK";
-    private static  final String COL_3 = "STATUS";
 
 
-    public DatabaseHelper(@Nullable Context context ) {
-        super(context, DATABASE_NAME, null, 1);
+    public DatabaseHelper(Context context ) {
+        super(context, "TODO_DATABASE.db", null, 1);
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT , TASK TEXT , STATUS INTEGER)");
+        db.execSQL("CREATE TABLE TODO_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, TASK TEXT, DATE TEXT, TIME TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS TODO_TABLE");
         onCreate(db);
     }
 
-    public void insertTask(ListItem item){
+    public void insertTask(String title, String date, String time){
         db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COL_2 , item.getHead());
-        values.put(COL_3 , 0);
-        db.insert(TABLE_NAME , null , values);
+        ContentValues cv = new ContentValues();
+        cv.put("TASK", title);
+        cv.put("DATE", date);
+        cv.put("TIME", time);
+
+        long result = db.insert("TODO_TABLE",null,cv);
+        if(result == -1){
+            Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context,"Added To Do List",Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     public void updateTask(int id , String task){
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COL_2 , task);
-        db.update(TABLE_NAME , values , "ID=?" , new String[]{String.valueOf(id)});
     }
 
 
     public void deleteTask(int id ){
         db = this.getWritableDatabase();
-        db.delete(TABLE_NAME , "ID=?" , new String[]{String.valueOf(id)});
+        db.delete("TODO_TABLE" , "ID=?" , new String[]{String.valueOf(id)});
     }
 
-    public List<ListItem> getAllTasks(){
-
+    public Cursor getAllTasks(){
         db = this.getWritableDatabase();
         Cursor cursor = null;
-        List<ListItem> modelList = new ArrayList<>();
-
-        db.beginTransaction();
-        try {
-            cursor = db.query(TABLE_NAME , null , null , null , null , null , null);
-            if (cursor !=null){
-                if (cursor.moveToFirst()){
-                    do {
-                        ListItem task = new ListItem();
-                        task.setId(cursor.getInt(cursor.getColumnIndex(COL_1)));
-                        task.setHead(cursor.getString(cursor.getColumnIndex(COL_2)));
-                        modelList.add(task);
-
-                    }while (cursor.moveToNext());
-                }
-            }
-        }finally {
-            db.endTransaction();
-            cursor.close();
+        if (db != null){
+            cursor = db.rawQuery("SELECT * FROM TODO_TABLE",null);
         }
-        return modelList;
+//        db.beginTransaction();
+//        try {
+//            cursor = db.query("TODO_TABLE" , null , null , null , null , null , null);
+//            if (cursor !=null){
+//                if (cursor.moveToFirst()){
+//                    do {
+//                        ListItem task = new ListItem();
+//                        task.setId(cursor.getInt(cursor.getColumnIndex("ID")));
+//                        task.setHead(cursor.getString(cursor.getColumnIndex("TASK")));
+//                        modelList.add(task);
+//
+//                    }while (cursor.moveToNext());
+//                }
+//            }
+//        }finally {
+//            db.endTransaction();
+//            cursor.close();
+//        }
+        return cursor;
     }
 
 }
