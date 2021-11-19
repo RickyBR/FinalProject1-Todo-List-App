@@ -42,7 +42,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context,"Added To Do List",Toast.LENGTH_SHORT).show();
         }
 
-
     }
 
     public void updateTask(int id , String task){
@@ -62,24 +61,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (db != null){
             cursor = db.rawQuery("SELECT * FROM TODO_TABLE",null);
         }
-//        db.beginTransaction();
-//        try {
-//            cursor = db.query("TODO_TABLE" , null , null , null , null , null , null);
-//            if (cursor !=null){
-//                if (cursor.moveToFirst()){
-//                    do {
-//                        ListItem task = new ListItem();
-//                        task.setId(cursor.getInt(cursor.getColumnIndex("ID")));
-//                        task.setHead(cursor.getString(cursor.getColumnIndex("TASK")));
-//                        modelList.add(task);
-//
-//                    }while (cursor.moveToNext());
-//                }
-//            }
-//        }finally {
-//            db.endTransaction();
-//            cursor.close();
-//        }
         return cursor;
     }
 
