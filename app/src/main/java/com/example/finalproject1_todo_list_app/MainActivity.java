@@ -22,8 +22,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerview;
@@ -52,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
         task_date = new ArrayList<>();
         task_time = new ArrayList<>();
 
+
         displayData();
 
         adapter = new viewadapter(this,task_id,task_title,task_date,task_time);
         mRecyclerview.setAdapter(adapter);
         mRecyclerview.setHasFixedSize(true);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
     void displayData(){
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         final int t1minute = calendar.get(Calendar.MINUTE);
 
-        EditText etDate = dialog.findViewById(R.id.textTanggal);
+        EditText etDate = dialog.findViewById(R.id.textTanggal2);
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-        EditText etTime = dialog.findViewById(R.id.textWaktu);
+        EditText etTime = dialog.findViewById(R.id.textWaktu2);
         etTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,15 +126,14 @@ public class MainActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
-        AppCompatButton btnSave = (AppCompatButton) dialog.findViewById(R.id.saveButton);
+        AppCompatButton btnSave = (AppCompatButton) dialog.findViewById(R.id.saveEdit);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                judul = ((EditText)dialog.findViewById(R.id.textJudul)).getText().toString();
-                tanggal = ((EditText)dialog.findViewById(R.id.textTanggal)).getText().toString();
-                waktu = ((EditText)dialog.findViewById(R.id.textWaktu)).getText().toString();
-
+                judul = ((EditText)dialog.findViewById(R.id.textJudul2)).getText().toString();
+                tanggal = ((EditText)dialog.findViewById(R.id.textTanggal2)).getText().toString();
+                waktu = ((EditText)dialog.findViewById(R.id.textWaktu2)).getText().toString();
                 myDB.insertTask(judul,tanggal,waktu);
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();

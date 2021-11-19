@@ -11,7 +11,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/mregular"
-        android:text="New Task"
+        android:text="Edit Task"
         android:textColor="@color/black"
         android:textSize="22sp" />
     <View
@@ -119,7 +119,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveEdit"
         android:layout_width="315dp"
-        android:layout_height="45dp"
+        android:layout_height="46dp"
         android:layout_gravity="center"
         android:layout_marginTop="12dp"
         android:background="@drawable/btn_finish"

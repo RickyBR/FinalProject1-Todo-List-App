@@ -6,16 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".SplashScreen"
     android:background="@color/background_main">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="Todo App"
-    android:fontFamily="@font/bebas_neue"
-    android:textColor="@color/black"
-    android:textSize="48sp"
-    android:gravity="center"
 
-    />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/btn_finish"
+        android:fontFamily="@font/bebas_neue"
+        android:gravity="center"
+        android:text="To do App"
+
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="366dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

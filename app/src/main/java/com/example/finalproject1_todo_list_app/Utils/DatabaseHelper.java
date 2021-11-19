@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.example.finalproject1_todo_list_app.viewadapter;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private Context context;
+    private final Context context;
     private SQLiteDatabase db;
 
 
@@ -41,18 +43,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else{
             Toast.makeText(context,"Added To Do List",Toast.LENGTH_SHORT).show();
         }
-
     }
 
-    public void updateTask(int id , String task){
+    public void updateTask(String row_id, String title, String date, String time){
         db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
+        ContentValues cv = new ContentValues();
+        cv.put("TASK", title);
+        cv.put("DATE", date);
+        cv.put("TIME", time);
+
+        long result = db.update("TODO_TABLE",cv,"ID=?", new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context,"Failed to update",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context,"Task updated",Toast.LENGTH_SHORT).show();
+        }
     }
 
 
-    public void deleteTask(int id ){
+    public void deleteTask(String row_id){
         db = this.getWritableDatabase();
-        db.delete("TODO_TABLE" , "ID=?" , new String[]{String.valueOf(id)});
+        long result = db.delete("TODO_TABLE" , "ID=?" , new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context,"Failed to delete",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context,"Task deleted",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public Cursor getAllTasks(){
