@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import com.example.finalproject1_todo_list_app.viewadapter;
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private final Context context;

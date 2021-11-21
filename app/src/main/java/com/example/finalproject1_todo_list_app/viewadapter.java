@@ -18,10 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalproject1_todo_list_app.Model.TodoModel;
 import com.example.finalproject1_todo_list_app.Utils.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class viewadapter extends RecyclerView.Adapter<viewadapter.ViewHolder> {
     Context context;
@@ -148,7 +150,7 @@ public class viewadapter extends RecyclerView.Adapter<viewadapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return task_id.size();
+       return task_id.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

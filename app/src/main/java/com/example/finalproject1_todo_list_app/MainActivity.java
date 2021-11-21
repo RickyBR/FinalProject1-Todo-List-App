@@ -89,42 +89,38 @@ public class MainActivity extends AppCompatActivity {
         final int t1minute = calendar.get(Calendar.MINUTE);
 
         EditText etDate = dialog.findViewById(R.id.textTanggal2);
-        etDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        MainActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-                        month = month+1;
-                        String date = day+"/"+month+"/"+year;
-                        etDate.setText(date);
-                    }
-                },year,month,day);
-                datePickerDialog.show();
-            }
+        String date = day+"/"+(month+1)+"/"+year;
+        etDate.setText(date);
+        etDate.setOnClickListener(view -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year1, int month1, int day1) {
+                    month1 = month1 +1;
+                    String date1 = day1 +"/"+ month1 +"/"+ year1;
+                    etDate.setText(date1);
+                }
+            },year,month,day);
+            datePickerDialog.show();
         });
         EditText etTime = dialog.findViewById(R.id.textWaktu2);
-        etTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        MainActivity.this,
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                //Initialize Calendar
-                                calendar.set(0,0,0,hourOfDay,minute);
-                                //Set selected time on text view
-                                etTime.setText(DateFormat.format("hh:mm aa",calendar));
-                            }
-                        },12,0,false
-                );
-                //Displayed previus selected time
-                timePickerDialog.updateTime(t1hour,t1minute);
-                //Show dialog
-                timePickerDialog.show();
-            }
+        etTime.setOnClickListener(view -> {
+            TimePickerDialog timePickerDialog = new TimePickerDialog(
+                    MainActivity.this,
+                    new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            //Initialize Calendar
+                            calendar.set(0,0,0,hourOfDay,minute);
+                            //Set selected time on text view
+                            etTime.setText(DateFormat.format("hh:mm aa",calendar));
+                        }
+                    },12,0,false
+            );
+            //Displayed previus selected time
+            timePickerDialog.updateTime(t1hour,t1minute);
+            //Show dialog
+            timePickerDialog.show();
         });
         AppCompatButton btnSave = (AppCompatButton) dialog.findViewById(R.id.saveEdit);
 
