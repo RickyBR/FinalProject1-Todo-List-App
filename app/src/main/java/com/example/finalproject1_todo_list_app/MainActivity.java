@@ -4,14 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -30,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     viewadapter adapter;
     String judul,waktu,tanggal;
     ArrayList<String> task_id,task_title,task_date,task_time;
+    SwipeRefreshLayout swipeRefreshLayout;
+    Button btn_finish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +57,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         displayData();
-
+        swipeRefreshLayout = findViewById(R.id.refreshlayout);
         adapter = new viewadapter(this,task_id,task_title,task_date,task_time);
         mRecyclerview.setAdapter(adapter);
         mRecyclerview.setHasFixedSize(true);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onRestart();
+            }
+        });
+
+
+
+
     }
 
     void displayData(){
@@ -137,8 +152,34 @@ public class MainActivity extends AppCompatActivity {
                 myDB.insertTask(judul,tanggal,waktu);
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
+
+            }
+        });
+
+    }
+    public void refresh(View view){          //refresh is onClick name given to the button
+        onRestart();
+    }
+    @Override
+    public void onRestart() {
+
+        // TODO Auto-generated method stub
+        super.onRestart();
+        Intent i = new Intent(MainActivity.this, MainActivity.class);  //your class
+        startActivity(i);
+        finish();
+
+    }
+    public void populateData() {
+        myDB = new DatabaseHelper(this);
+
+        runOnUiThread(new Runnable() {
+            public void run() {
+                displayData();
             }
         });
     }
+
+
 
 }

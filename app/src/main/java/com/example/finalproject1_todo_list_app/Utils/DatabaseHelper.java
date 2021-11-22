@@ -70,6 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context,"Task deleted",Toast.LENGTH_SHORT).show();
         }
 
+
     }
 
     public Cursor getAllTasks(){
@@ -81,4 +82,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+
 }
+

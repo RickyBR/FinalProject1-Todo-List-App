@@ -39,6 +39,7 @@ public class viewadapter extends RecyclerView.Adapter<viewadapter.ViewHolder> {
         this.task_title = task_title;
         this.task_date = task_date;
         this.task_time = task_time;
+
     }
 
 
@@ -63,7 +64,10 @@ public class viewadapter extends RecyclerView.Adapter<viewadapter.ViewHolder> {
                 id = holder.Id.getText().toString();
                 myDB.deleteTask(id);
                 notifyDataSetChanged();
+
+
             }
+
         });
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +143,7 @@ public class viewadapter extends RecyclerView.Adapter<viewadapter.ViewHolder> {
                         waktu = ((EditText)dialog.findViewById(R.id.textWaktu2)).getText().toString();
                         myDB.updateTask(id,judul,tanggal,waktu);
                         dialog.dismiss();
+                        notifyDataSetChanged();
                     }
                 });
 
@@ -167,4 +172,6 @@ public class viewadapter extends RecyclerView.Adapter<viewadapter.ViewHolder> {
 
         }
     }
+
+
 }
