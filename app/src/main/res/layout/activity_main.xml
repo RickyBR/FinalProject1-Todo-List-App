@@ -13,19 +13,18 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#E4E0C7"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:text="Todo App"
-            android:fontFamily="@font/bebas_neue"
-            android:textColor="@color/black"
-            android:textSize="32sp"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="16dp"
-            />
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/bebas_neue"
+            android:text="Todo App"
+            android:textColor="@color/black"
+            android:textSize="32sp" />
 
     </LinearLayout>
 

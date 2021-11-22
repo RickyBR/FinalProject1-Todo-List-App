@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import com.example.finalproject1_todo_list_app.viewadapter;
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private final Context context;
@@ -39,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert("TODO_TABLE",null,cv);
         if(result == -1){
-            Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"Failed to add",Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(context,"Added To Do List",Toast.LENGTH_SHORT).show();
         }
@@ -65,9 +63,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
         long result = db.delete("TODO_TABLE" , "ID=?" , new String[]{row_id});
         if(result == -1){
-            Toast.makeText(context,"Failed to delete",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"Failed to finish",Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context,"Task deleted",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"Task complete",Toast.LENGTH_SHORT).show();
         }
 
 

@@ -39,6 +39,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:editable="true"
         android:fontFamily="@font/montserratlight"
         android:hint="Your task"
         android:textColor="@color/black" />
@@ -72,8 +73,10 @@
             android:id="@+id/textTanggal2"
             android:layout_width="match_parent"
             android:layout_height="35dp"
+            android:focusable="false"
             android:fontFamily="@font/montserratlight"
             android:hint="Date not set"
+            android:inputType="none"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
@@ -109,6 +112,7 @@
             android:id="@+id/textWaktu2"
             android:layout_width="match_parent"
             android:layout_height="35dp"
+            android:focusable="false"
             android:fontFamily="@font/montserratlight"
             android:hint="Time not set (All day)"
             android:textColor="@color/black"

@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.finalproject1_todo_list_app.Utils.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerview.setAdapter(adapter);
         mRecyclerview.setHasFixedSize(true);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -72,20 +74,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     }
 
     void displayData(){
         Cursor cursor = myDB.getAllTasks();
-        if(cursor.getCount() == 0){
-            Toast.makeText(this,"No data.", Toast.LENGTH_SHORT).show();
-        }else{
             while (cursor.moveToNext()){
                 task_id.add(cursor.getString(0));
                 task_title.add(cursor.getString(1));
                 task_date.add(cursor.getString(2));
                 task_time.add(cursor.getString(3));
-
-            }
         }
     }
 
@@ -95,52 +93,53 @@ public class MainActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_window);
         dialog.show();
         Calendar calendar  = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        EditText etTime = dialog.findViewById(R.id.textWaktu2);
+        EditText etDate = dialog.findViewById(R.id.textTanggal2);
 
         final int t1hour = calendar.get(Calendar.HOUR_OF_DAY);
-
         final int t1minute = calendar.get(Calendar.MINUTE);
 
-        EditText etDate = dialog.findViewById(R.id.textTanggal2);
+        DatePickerDialog.OnDateSetListener Date= new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                calendar.set(Calendar.YEAR,year);
+                calendar.set(Calendar.MONTH,month);
+                calendar.set(Calendar.DAY_OF_MONTH,day);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE,dd MMM,yyyy");
+                etDate.setText(sdf.format(calendar.getTime()));
+            }
+        };
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        MainActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-                        month = month+1;
-                        String date = day+"/"+month+"/"+year;
-                        etDate.setText(date);
-                    }
-                },year,month,day);
-                datePickerDialog.show();
+                new DatePickerDialog(MainActivity.this,Date,calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-        EditText etTime = dialog.findViewById(R.id.textWaktu2);
-        etTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        etTime.setTextIsSelectable(false);
+
+        etTime.setOnClickListener(view -> {
+            if(etDate.getText().toString().isEmpty()){
+                Toast.makeText(getApplicationContext(),"Input date",Toast.LENGTH_SHORT).show();
+            }else {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
                         MainActivity.this,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                //Initialize Calendar
-                                calendar.set(0,0,0,hourOfDay,minute);
-                                //Set selected time on text view
-                                etTime.setText(DateFormat.format("hh:mm aa",calendar));
+                                calendar.set(0, 0, 0, hourOfDay, minute);
+                                etTime.setText(DateFormat.format("hh:mm aa", calendar));
                             }
-                        },12,0,false
+                        }, 12, 0, false
                 );
-                //Displayed previus selected time
-                timePickerDialog.updateTime(t1hour,t1minute);
-                //Show dialog
+                timePickerDialog.updateTime(t1hour, t1minute);
                 timePickerDialog.show();
             }
         });
+
+
         AppCompatButton btnSave = (AppCompatButton) dialog.findViewById(R.id.saveEdit);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -149,9 +148,18 @@ public class MainActivity extends AppCompatActivity {
                 judul = ((EditText)dialog.findViewById(R.id.textJudul2)).getText().toString();
                 tanggal = ((EditText)dialog.findViewById(R.id.textTanggal2)).getText().toString();
                 waktu = ((EditText)dialog.findViewById(R.id.textWaktu2)).getText().toString();
+
                 myDB.insertTask(judul,tanggal,waktu);
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
+
+                if(judul.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Task title is empty",Toast.LENGTH_SHORT).show();
+                }else{
+                    myDB.insertTask(judul,tanggal,waktu);
+                    refresh();
+                    dialog.dismiss();
+                }
 
             }
         });
@@ -181,5 +189,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+    public void refresh(){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(0,0);
+    }
 
 }
