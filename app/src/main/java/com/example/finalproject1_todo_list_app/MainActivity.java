@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     String judul,waktu,tanggal;
     ArrayList<String> task_id,task_title,task_date,task_time;
     SwipeRefreshLayout swipeRefreshLayout;
-    Button btn_finish;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +67,9 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                onRestart();
+                refresh();
             }
         });
-
-
-
-
 
     }
 
@@ -149,10 +145,6 @@ public class MainActivity extends AppCompatActivity {
                 tanggal = ((EditText)dialog.findViewById(R.id.textTanggal2)).getText().toString();
                 waktu = ((EditText)dialog.findViewById(R.id.textWaktu2)).getText().toString();
 
-                myDB.insertTask(judul,tanggal,waktu);
-                adapter.notifyDataSetChanged();
-                dialog.dismiss();
-
                 if(judul.isEmpty()){
                     Toast.makeText(getApplicationContext(),"Task title is empty",Toast.LENGTH_SHORT).show();
                 }else{
@@ -165,36 +157,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    public void refresh(View view){          //refresh is onClick name given to the button
-        onRestart();
-    }
-    @Override
-    public void onRestart() {
-
-        // TODO Auto-generated method stub
-        super.onRestart();
-        Intent i = new Intent(MainActivity.this, MainActivity.class);  //your class
-        startActivity(i);
-        finish();
-
-    }
-    public void populateData() {
-        myDB = new DatabaseHelper(this);
-
-        runOnUiThread(new Runnable() {
-            public void run() {
-                displayData();
-            }
-        });
-    }
-
-
-
 
     public void refresh(){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         overridePendingTransition(0,0);
+        finish();
     }
 
 }

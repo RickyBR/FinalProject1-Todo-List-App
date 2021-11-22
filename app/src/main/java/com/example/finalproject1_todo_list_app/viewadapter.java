@@ -45,7 +45,6 @@ public class viewadapter extends RecyclerView.Adapter<viewadapter.ViewHolder> {
 
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -68,9 +67,6 @@ public class viewadapter extends RecyclerView.Adapter<viewadapter.ViewHolder> {
                 myDB.deleteTask(id);
 
                 notifyDataSetChanged();
-
-
-
                 refresh();
 
             }

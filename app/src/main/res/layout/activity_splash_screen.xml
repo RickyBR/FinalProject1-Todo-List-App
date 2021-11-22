@@ -8,15 +8,15 @@
     android:background="@color/background_main">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/btn_finish"
         android:fontFamily="@font/bebas_neue"
         android:gravity="center"
-        android:text="To do App"
+        android:text="Todo App"
 
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="48sp"
         tools:layout_editor_absoluteX="34dp"
         tools:layout_editor_absoluteY="366dp" />
