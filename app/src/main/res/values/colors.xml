@@ -8,4 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background_main">#F5F3E7</color>
+    <color name="list_item">#F9F1DA</color>
+    <color name="btn_finish">#DFBC9B</color>
+
 </resources>
