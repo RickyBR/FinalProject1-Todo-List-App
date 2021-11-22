@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     viewadapter adapter;
     String judul,waktu,tanggal;
     ArrayList<String> task_id,task_title,task_date,task_time;
-    long backPressTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,16 +151,4 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0,0);
     }
 
-    @Override
-    public void onBackPressed() {
-
-
-        if (backPressTime + 2000 > System.currentTimeMillis()){
-            super.onBackPressed();
-            return;
-        }else{
-            Toast.makeText(getApplicationContext(),"Press back again to exit",Toast.LENGTH_SHORT).show();
-        }
-        backPressTime = System.currentTimeMillis();
-    }
 }
