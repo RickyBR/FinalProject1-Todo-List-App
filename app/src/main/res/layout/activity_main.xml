@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:id="@+id/mainlayout"
+
+
     android:background="@color/background_main">
 
     <LinearLayout
@@ -32,6 +33,8 @@
         android:id="@+id/refreshlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/navbar">
 
         <androidx.recyclerview.widget.RecyclerView
